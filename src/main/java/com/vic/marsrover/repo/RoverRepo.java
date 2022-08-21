@@ -13,12 +13,13 @@ import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Configuration
 @Repository
 public class RoverRepo {
 
-    private static Map<Coordinates, Rover> rovers = new HashMap<>();
+    private static Map<Coordinates, Rover> rovers = new ConcurrentHashMap<>();
 
     @Value("${rovers.on.mars}")
     private String fileName;
@@ -32,7 +33,12 @@ public class RoverRepo {
     }
 
     public void addRover(Coordinates coordinates, Rover rover) {
-        this.rovers.put(coordinates, rover);
+        if (!this.rovers.containsKey(coordinates)) {
+            this.rovers.put(coordinates, rover);
+        }
+        else {
+            throw new IllegalStateException("Rover will not be deployed. Current position is already occupied by another rover!!!");
+        }
     }
 
     public void removeRover(Coordinates coordinates) {
