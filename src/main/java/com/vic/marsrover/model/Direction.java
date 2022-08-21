@@ -4,30 +4,6 @@ import java.io.Serializable;
 
 public enum Direction implements Serializable {
 
-    EAST("E") {
-        @Override
-        public Direction left(){
-            return NORTH;
-        }
-
-        @Override
-        public Direction right(){
-            return SOUTH;
-        }
-    },
-
-    WEST("W") {
-        @Override
-        public Direction left(){
-            return SOUTH;
-        }
-
-        @Override
-        public Direction right(){
-            return NORTH;
-        }
-    },
-
     NORTH("N") {
         @Override
         public Direction left(){
@@ -50,7 +26,32 @@ public enum Direction implements Serializable {
         public Direction right(){
             return WEST;
         }
+    },
+
+    EAST("E") {
+        @Override
+        public Direction left(){
+            return NORTH;
+        }
+
+        @Override
+        public Direction right(){
+            return SOUTH;
+        }
+    },
+
+    WEST("W") {
+        @Override
+        public Direction left(){
+            return SOUTH;
+        }
+
+        @Override
+        public Direction right(){
+            return NORTH;
+        }
     };
+
 
     private String direction;
 
@@ -64,14 +65,14 @@ public enum Direction implements Serializable {
 
     public static Direction get(String directionSign) {
         switch (directionSign) {
-            case "E":
-                return EAST;
-            case "W":
-                return WEST;
             case "N":
                 return NORTH;
             case "S":
                 return SOUTH;
+            case "E":
+                return EAST;
+            case "W":
+                return WEST;
             default:
                 throw new IllegalStateException("Unknown Direction Code!!!");
         }
